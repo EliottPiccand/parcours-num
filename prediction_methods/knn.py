@@ -5,8 +5,9 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.metrics import accuracy_score
 
 def tune_knn_hyperparameters(data: pd.DataFrame):
+    data = format_dataset(data,[0,-24,-48],1)
     y = data['alerte']
-    X = data[['timestamp', 'Valeur']].copy()
+    X = data[['timestamp_h0', 'Valeur_h0', 'timestamp_h-24', 'Valeur_h-24', 'timestamp_h-48', 'Valeur_h-48']].copy()
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.9, random_state=random_state)
 
@@ -35,8 +36,9 @@ def tune_knn_hyperparameters(data: pd.DataFrame):
 def train_model_knn(data: pd.DataFrame):
     best_params = tune_knn_hyperparameters(data)
 
+    data = format_dataset(data,[0,-24,-48],1)
     y = data['alerte']
-    X = data[['timestamp', 'Valeur']].copy()
+    X = data[['timestamp_h0', 'Valeur_h0', 'timestamp_h-24', 'Valeur_h-24', 'timestamp_h-48', 'Valeur_h-48']].copy()
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.9, random_state=random_state)
 
