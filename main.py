@@ -51,6 +51,7 @@ for (cleaning_method_name, cleaning_method), (prediction_method_name, train_mode
     method_start_time = get_time_ns()
 
     cleaned_data_path = Path(f"data/computed/{cleaning_method_name.replace(' ', '_')}.csv")
+    cleaned_data_path.parent.mkdir(exist_ok=True)
     if cleaned_data_path.exists():
         print("- Loading cleaned train data")
         cleaned_train_data = read_csv(cleaned_data_path)
