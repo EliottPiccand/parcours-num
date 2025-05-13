@@ -84,9 +84,11 @@ def guesstimate_sin(data: DataFrame) -> DataFrame:
             values = model_station(timestamps, *params)
             data[data["idPolair"] == station_id].iloc[nan_indices]["Valeur"] = values 
         
-        plt.figure()
-        plt.scatter(data[data["idPolair"] == station_id]["timestamp"], data[data["idPolair"] == station_id]["Valeur"], label=f"{station_id}")
-        plt.scatter(nan_values["timestamp"], nan_values["Valeur"], label=f"{station_id} pred", color="red")
-        plt.plot()
+        fig = plt.figure()
+        fig.scatter(data[data["idPolair"] == station_id]["timestamp"], data[data["idPolair"] == station_id]["Valeur"], label=f"{station_id}")
+        fig.scatter(nan_values["timestamp"], nan_values["Valeur"], label=f"{station_id} pred", color="red")
+        fig.plot()
+
+        break
 
     return data

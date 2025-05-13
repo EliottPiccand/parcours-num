@@ -5,7 +5,3 @@
 - `Challenge_Data_O3_2016.rds` -> `test_data_1.rds`
 - `CHIMERE_O3_2015.rds` -> `test_data_2.rds`
 - `CHIMERE_O3_2016.rds` -> `test_data_3.rds`
-
-## TODO:
-- replace data col with timestamp
-- add bool column "alert"
