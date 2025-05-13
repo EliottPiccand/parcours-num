@@ -14,8 +14,8 @@ if TYPE_CHECKING:
 
 
 CLEANING_METHODS: tuple[tuple[str, CleaningMethod], ...] = (
-    ("guesstimate_sin", guesstimate_sin),
     ("remove missing values", remove_missing_values),
     ("fill with previous", fill_with_previous),
     ("fill with next", fill_with_next),
+    ("guesstimate_sin", guesstimate_sin),
 )
