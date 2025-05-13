@@ -66,25 +66,22 @@ for (cleaning_method_name, cleaning_method), (prediction_method_name, train_mode
 
     print(np.any(cleaned_train_data['Valeur'].isna()))
 
-    plt.show()
 
-    break
+    model = train_model(cleaned_train_data)
 
-    # model = train_model(cleaned_train_data)
+    error = get_model_error(model, TEST_DATA)
+    if error < min_error:
+        min_error = error
+        min_error_arg = (cleaning_method_name, prediction_method_name)
 
-    # error = get_model_error(model, TEST_DATA)
-    # if error < min_error:
-    #     min_error = error
-    #     min_error_arg = (cleaning_method_name, prediction_method_name)
+    print(f"Compute time      : {display_time_diff_to_now(method_start_time)}")
+    print(f"> error : {error:.3f}%")
 
-    # print(f"Compute time      : {display_time_diff_to_now(method_start_time)}")
-    # print(f"> error : {error:.3f}%")
-
-# print()
-# print()
-# print()
-# print(f"Total Compute Time : {display_time_diff_to_now(start_time)}")
-# print("Best methods : ")
-# print("- Cleaning method   :", min_error_arg[0])
-# print("- Prediction method :", min_error_arg[1])
-# print("- Error             :", min_error)
+print()
+print()
+print()
+print(f"Total Compute Time : {display_time_diff_to_now(start_time)}")
+print("Best methods : ")
+print("- Cleaning method   :", min_error_arg[0])
+print("- Prediction method :", min_error_arg[1])
+print("- Error             :", min_error)
