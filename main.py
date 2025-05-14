@@ -22,16 +22,14 @@ COMPUTED_DATA_DIR = DATA_DIR / "computed"
 
 # Training & Testing data
 def load_rds(filename: Path) -> DataFrame:
-    print(f"- Loading data from file '{filename}'")
     return read_r(filename)[None]
 
 def default_data_filter(data: DataFrame) -> DataFrame:
     """Remove column 'Mesure' and replace 'date' by 'timestamp'"""
 
-    data.index = DatetimeIndex(data["date"]).tz_localize("UTC")
-    data["timestamp"] = data.index.values.astype(int64) // 1e9
-    data = data.drop(columns=["date"])
-    data = data.drop(columns=["Mesure"])
+    # data.index = DatetimeIndex(data["date"]).tz_localize("UTC")
+    data["timestamp"] = DatetimeIndex(data["date"]).tz_localize("UTC").values.astype(int64) // 1e9
+    data = data.drop(columns=["date", "Mesure"])
     data["alerte"] = data["Valeur"] > 100
     return data
 
@@ -44,7 +42,7 @@ else:
     print("Filtering training data")
     TRAIN_DATA = load_rds(TRAIN_DATA_PATH) # ['Organisme', 'Station', 'Mesure', 'Valeur', 'idPolair', 'date']
     TRAIN_DATA = default_data_filter(TRAIN_DATA) # ['Organisme', 'Station', 'Valeur', 'idPolair', 'timestamp']
-    print("Saving filtering data")
+    print("Saving filtered training data")
     SAVED_TRAIN_DATA_PATH.parent.mkdir(exist_ok=True)
     TRAIN_DATA.to_csv(SAVED_TRAIN_DATA_PATH)
 
@@ -80,7 +78,6 @@ for (cleaning_method_name, cleaning_method), (prediction_method_name, train_mode
     print(len(TRAIN_DATA), len(cleaned_train_data))
 
     print(np.any(cleaned_train_data['Valeur'].isna()))
-    # model = train_model(cleaned_train_data)
 
     # error = get_model_error(model, TEST_DATA)
     # if error < min_error:
@@ -98,3 +95,6 @@ print(f"Total Compute Time : {display_time_diff_to_now(start_time)}")
 # print("- Cleaning method   :", min_error_arg[0])
 # print("- Prediction method :", min_error_arg[1])
 # print("- Error             :", min_error)
+
+while True:
+    pass

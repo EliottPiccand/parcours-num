@@ -17,5 +17,5 @@ CLEANING_METHODS: tuple[tuple[str, CleaningMethod], ...] = (
     ("remove missing values", remove_missing_values),
     ("fill with previous", fill_with_previous),
     ("fill with next", fill_with_next),
-    ("guesstimate_sin", guesstimate_sin),
+    ("guesstimate sin", guesstimate_sin),
 )
