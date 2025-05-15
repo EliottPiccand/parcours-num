@@ -40,8 +40,8 @@ def train_model_knn(data: DataFrame) -> KNeighborsClassifier:
     return knn
 
 def get_model_knn_error(model: KNeighborsClassifier, data: DataFrame) -> float:
-    formatted_data = format_dataset(data, [0, -24, -48])
-    x = formatted_data[["timestamp_h0", "Valeur_h0", "timestamp_h-24", "Valeur_h-24", "timestamp_h-48", "Valeur_h-48"]]
+    data = format_dataset(data, [0, -24, -48])
+    x = data[["timestamp_h0", "Valeur_h0", "timestamp_h-24", "Valeur_h-24", "timestamp_h-48", "Valeur_h-48"]]
     
     y = [
         has_alert_been_raised_next_day(data, ts)

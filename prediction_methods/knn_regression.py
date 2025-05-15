@@ -27,7 +27,7 @@ def train_model_knn(data: pd.DataFrame) -> KNeighborsRegressor:
     
     data = format_dataset(data, [0, -24, -48])  
     y = data['alerte_d+1']   
-    x = data['timestamp_h0', 'Valeur_h0', 'timestamp_h-24', 'Valeur_h-24', 'timestamp_h-48', 'Valeur_h-48']].copy()
+    x = data[['timestamp_h0', 'Valeur_h0', 'timestamp_h-24', 'Valeur_h-24', 'timestamp_h-48', 'Valeur_h-48']]
 
     best_params = tune_knn_hyperparameters(x, y)
 
