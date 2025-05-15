@@ -1,5 +1,5 @@
 import pandas as DataFrame
-from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.model_selection import GridSearchCV
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.metrics import mean_squared_error, make_scorer
 from .format_dataset import format_dataset, has_alert_been_raised_next_day
