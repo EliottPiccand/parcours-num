@@ -2,7 +2,6 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-import matplotlib.pyplot as plt
 from numpy import clip, inf, pi, sin, unique, where
 from scipy.optimize import curve_fit
 
@@ -13,7 +12,6 @@ if TYPE_CHECKING:
 W_ONE_YEAR = 2 * pi / (365.25 * 24 * 3600)
 W_TWO_WEEKS = 2 * pi / (7 * 24 * 3600)
 W_ONE_DAY = 2 * pi / (24 * 3600)
-
 
 def model_station(t, a, phi_a, b, phi_b, c, phi_c, w, phi_d, offset):
     return clip(
@@ -36,8 +34,11 @@ def get_station_id_with_enough_data(data: DataFrame) -> list[int]:
     
     return id_stations_to_keep
 
+def tmp(data):
+    return data[data["idPolair"].isin(get_station_id_with_enough_data(data))]
+
 YEAR_SLICE_COUNT = 6
-WINDOW_OVERLAP = 1
+WINDOW_OVERLAP = 1 # month
 def guesstimate_sin(data: DataFrame) -> DataFrame:
     """Guesstimate the missing values using a sum of sinus of periods :
         - one year
@@ -53,7 +54,8 @@ def guesstimate_sin(data: DataFrame) -> DataFrame:
     """
     MAX_TIME = max(data["timestamp"])
     MIN_TIME = min(data["timestamp"])
-    for s, station_id in enumerate(get_station_id_with_enough_data(data)):
+    stations_with_enough_data = get_station_id_with_enough_data(data)
+    for j, station_id in enumerate(stations_with_enough_data):
         station_values = data[data["idPolair"] == station_id]
         nan_indices = where(station_values["Valeur"].isna())[0]
         not_nan_indices = where(station_values["Valeur"].notna())[0]
@@ -61,13 +63,22 @@ def guesstimate_sin(data: DataFrame) -> DataFrame:
         not_nan_values = station_values.iloc[not_nan_indices]
 
         for i in range(YEAR_SLICE_COUNT):
-            print(s, i)
+            print(f"   - station {station_id} ({j}/{len(stations_with_enough_data)}) part {i+1}/{YEAR_SLICE_COUNT} -> ", end="")
             # Slice fill part
             fill_lower_bound = MIN_TIME + i * (MAX_TIME - MIN_TIME) / YEAR_SLICE_COUNT
             fill_upper_bound = MIN_TIME + (i + 1) * (MAX_TIME - MIN_TIME) / YEAR_SLICE_COUNT
 
-            fill_values = nan_values.loc[fill_lower_bound <= nan_values["timestamp"]]
+            fill_values = station_values.loc[fill_lower_bound <= station_values["timestamp"]]
             fill_values = fill_values.loc[fill_values["timestamp"] <= fill_upper_bound]
+
+            if not any(fill_values["Valeur"].isna()):
+                print("no gap found")
+                continue
+            else:
+                print("gap(s) found : fitting model... ", end="")
+
+            real_fill_values = nan_values.loc[fill_lower_bound <= nan_values["timestamp"]]
+            real_fill_values = real_fill_values.loc[real_fill_values["timestamp"] <= fill_upper_bound]
 
             # Slice training values
             training_lower_bound = MIN_TIME + i * (MAX_TIME - MIN_TIME) / YEAR_SLICE_COUNT - WINDOW_OVERLAP * 30 * 24 * 60 * 60
@@ -80,15 +91,10 @@ def guesstimate_sin(data: DataFrame) -> DataFrame:
             params, _ = curve_fit(model_station, training_values["timestamp"], training_values["Valeur"], maxfev=100_000)
 
             # Save data
-            timestamps = fill_values["timestamp"]
+            timestamps = real_fill_values["timestamp"]
             values = model_station(timestamps, *params)
-            data[data["idPolair"] == station_id].iloc[nan_indices]["Valeur"] = values 
-        
-        fig = plt.figure()
-        fig.scatter(data[data["idPolair"] == station_id]["timestamp"], data[data["idPolair"] == station_id]["Valeur"], label=f"{station_id}")
-        fig.scatter(nan_values["timestamp"], nan_values["Valeur"], label=f"{station_id} pred", color="red")
-        fig.plot()
+            data.loc[real_fill_values.index, "Valeur"] = values
 
-        break
+            print("done")
 
-    return data
+    return data[data["idPolair"].isin(get_station_id_with_enough_data(data))]

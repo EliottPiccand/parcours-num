@@ -11,7 +11,7 @@ if TYPE_CHECKING:
 
 
 def fill_with_next(data: DataFrame) -> DataFrame:
-    """Fill nan values with next non-nan value, per station
+    """Fill nan values with next non-nan value, per station.
     
     If station data ends with nan, fill with last non-nan value
     Final removal of nan still present because some stations have only nan

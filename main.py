@@ -22,16 +22,13 @@ COMPUTED_DATA_DIR = DATA_DIR / "computed"
 
 # Training & Testing data
 def load_rds(filename: Path) -> DataFrame:
-    print(f"- Loading data from file '{filename}'")
     return read_r(filename)[None]
 
 def default_data_filter(data: DataFrame) -> DataFrame:
-    """Remove column 'Mesure' and replace 'date' by 'timestamp'"""
+    """Remove column 'Mesure', replace 'date' by 'timestamp' and add 'alerte'"""
 
-    data.index = DatetimeIndex(data["date"]).tz_localize("UTC")
-    data["timestamp"] = data.index.values.astype(int64) // 1e9
-    data = data.drop(columns=["date"])
-    data = data.drop(columns=["Mesure"])
+    data["timestamp"] = DatetimeIndex(data["date"]).tz_localize("UTC").values.astype(int64) // 1e9
+    data = data.drop(columns=["date", "Mesure"])
     data["alerte"] = data["Valeur"] > 100
     return data
 
@@ -43,12 +40,23 @@ if SAVED_TRAIN_DATA_PATH.exists():
 else:
     print("Filtering training data")
     TRAIN_DATA = load_rds(TRAIN_DATA_PATH) # ['Organisme', 'Station', 'Mesure', 'Valeur', 'idPolair', 'date']
-    TRAIN_DATA = default_data_filter(TRAIN_DATA) # ['Organisme', 'Station', 'Valeur', 'idPolair', 'timestamp']
-    print("Saving filtering data")
+    TRAIN_DATA = default_data_filter(TRAIN_DATA) # ['Organisme', 'Station', 'Valeur', 'idPolair', 'timestamp', 'alerte']
+    print("Saving filtered training data")
     SAVED_TRAIN_DATA_PATH.parent.mkdir(exist_ok=True)
     TRAIN_DATA.to_csv(SAVED_TRAIN_DATA_PATH)
 
-TEST_DATA = load_rds(DATA_DIR / "test_data_1.rds")
+TEST_DATA_PATH = DATA_DIR / "test_data_1.rds"
+SAVED_TEST_DATA_PATH = COMPUTED_DATA_DIR / "test_data_1.csv"
+if SAVED_TEST_DATA_PATH.exists():
+    print("Loading test data")
+    TEST_DATA = read_csv(SAVED_TEST_DATA_PATH)
+else:
+    print("Filtering test data")
+    TEST_DATA = load_rds(TEST_DATA_PATH) # ['Organisme', 'Station', 'Mesure', 'Valeur', 'idPolair', 'date']
+    TEST_DATA = default_data_filter(TEST_DATA) # ['Organisme', 'Station', 'Valeur', 'idPolair', 'timestamp', 'alerte']
+    print("Saving filtered test data")
+    SAVED_TEST_DATA_PATH.parent.mkdir(exist_ok=True)
+    TEST_DATA.to_csv(SAVED_TEST_DATA_PATH)
 
 def display_time_diff_to_now(start: int) -> str:
     return str(timedelta(seconds=(get_time_ns() - start) / 1e9))
@@ -74,21 +82,18 @@ for (cleaning_method_name, cleaning_method), (prediction_method_name, train_mode
         cleaned_train_data = cleaning_method(TRAIN_DATA)
         print("- Saving cleaned train data")
         cleaned_train_data.to_csv(cleaned_data_path)
-    import numpy as np
-    print(np.any(TRAIN_DATA['Valeur'].isna()))
 
-    print(len(TRAIN_DATA), len(cleaned_train_data))
+    print("- Training model")
+    model = train_model(cleaned_train_data)
+    print("- Estimating model error")
+    error = get_model_error(model, TEST_DATA)
 
-    print(np.any(cleaned_train_data['Valeur'].isna()))
-    # model = train_model(cleaned_train_data)
-
-    # error = get_model_error(model, TEST_DATA)
-    # if error < min_error:
-    #     min_error = error
-    #     min_error_arg = (cleaning_method_name, prediction_method_name)
+    if error < min_error:
+        min_error = error
+        min_error_arg = (cleaning_method_name, prediction_method_name)
 
     print(f"Compute time      : {display_time_diff_to_now(method_start_time)}")
-    # print(f"> error : {error:.3f}%")
+    print(f"> error : {error:.3f}%")
 
 print()
 print()
@@ -98,3 +103,6 @@ print(f"Total Compute Time : {display_time_diff_to_now(start_time)}")
 # print("- Cleaning method   :", min_error_arg[0])
 # print("- Prediction method :", min_error_arg[1])
 # print("- Error             :", min_error)
+
+while True:
+    pass
