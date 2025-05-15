@@ -38,6 +38,8 @@ def format_dataset(data: DataFrame, hours: list[int], day_forecast: int = 1) -> 
     columns.remove("timestamp")
     columns.remove("Valeur")
     columns.remove("alerte")
+    if 'date' in columns:
+        columns.remove("date")
     for hour in hours:
         columns.append(f"timestamp_h{hour}")
         columns.append(f"Valeur_h{hour}")
