@@ -1,16 +1,8 @@
-from __future__ import annotations
-
-from typing import TYPE_CHECKING
-
+from pandas import DataFrame
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import GridSearchCV
 from sklearn.neighbors import KNeighborsClassifier
-
 from .format_dataset import format_dataset, has_alert_been_raised_next_day
-
-if TYPE_CHECKING:
-    from pandas import DataFrame
-
 
 def tune_knn_hyperparameters(x, y):
     param_grid = {
@@ -40,8 +32,8 @@ def train_model_knn(data: DataFrame) -> KNeighborsClassifier:
     return knn
 
 def get_model_knn_error(model: KNeighborsClassifier, data: DataFrame) -> float:
-    formatted_data = format_dataset(data, [0, -24, -48])
-    x = formatted_data[["timestamp_h0", "Valeur_h0", "timestamp_h-24", "Valeur_h-24", "timestamp_h-48", "Valeur_h-48"]]
+    data = format_dataset(data, [0, -24, -48])
+    x = data[["timestamp_h0", "Valeur_h0", "timestamp_h-24", "Valeur_h-24", "timestamp_h-48", "Valeur_h-48"]]
     
     y = [
         has_alert_been_raised_next_day(data, ts)
