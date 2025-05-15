@@ -1,7 +1,5 @@
 from __future__ import annotations
 
-from functools import cache
-
 from pandas import DataFrame
 from numpy import unique, min, max, any
 from datetime import datetime, timedelta
@@ -17,7 +15,6 @@ def has_alert_been_raised_next_day(data: DataFrame, today_timestamp: float, day_
     data = data[data["timestamp"] <= tomorrow_end.timestamp()]
     return any(data["alerte"])
 
-@cache
 def format_dataset(data: DataFrame, hours: list[int], day_forecast: int = 1) -> DataFrame:
     """Pack data by batch with values of previous 'hours' and alerte 'day_forecast' later.
 
