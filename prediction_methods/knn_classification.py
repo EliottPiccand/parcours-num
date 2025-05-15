@@ -4,10 +4,6 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.neighbors import KNeighborsClassifier
 from .format_dataset import format_dataset, has_alert_been_raised_next_day
 
-
-x
-
-
 def tune_knn_hyperparameters(x, y):
     param_grid = {
         "n_neighbors": [3, 5, 7, 9, 11, 13, 15],
