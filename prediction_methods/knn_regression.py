@@ -1,7 +1,7 @@
 import pandas as DataFrame
 from sklearn.model_selection import GridSearchCV
 from sklearn.neighbors import KNeighborsRegressor
-from sklearn.metrics import mean_squared_error, make_scorer
+from sklearn.metrics import mean_squared_error, make_scorer, accuracy_score
 from .format_dataset import format_dataset, has_alert_been_raised_next_day
 
 mse_scorer = make_scorer(mean_squared_error, greater_is_better=False)
@@ -48,6 +48,6 @@ def get_model_knn_error(model: KNeighborsRegressor, data: DataFrame) -> float:
 
     y_pred = model.predict(x)
     
-    mse = mean_squared_error(y, y_pred)
+    error = 1 - accuracy_score(y, y_pred)
     
-    return mse
+    return error

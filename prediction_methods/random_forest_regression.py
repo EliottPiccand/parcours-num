@@ -1,5 +1,5 @@
 from pandas import DataFrame
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import accuracy_score
 from sklearn.model_selection import GridSearchCV
 from sklearn.ensemble import RandomForestRegressor
 from .format_dataset import format_dataset, has_alert_been_raised_next_day
@@ -51,6 +51,6 @@ def get_model_random_forest_error_regression(model: RandomForestRegressor, data:
 
     y_pred = model.predict(x)
 
-    mse = mean_squared_error(y, y_pred)
+    error = 1 - accuracy_score(y, y_pred)
 
-    return mse
+    return error
