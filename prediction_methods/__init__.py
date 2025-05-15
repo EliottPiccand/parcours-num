@@ -3,13 +3,14 @@ from __future__ import annotations
 from typing import TYPE_CHECKING
 # from .model_arbre import train_model_arbre_classification, get_model_error_arbre
 # from .model_arbre import train_model_arbre_regression
-<<<<<<< HEAD
+
 from .knn import train_model_knn, get_model_knn_error
 from .model_arbre import train_model_arbre_classification, get_model_error_arbre_classification
 from .model_arbre import train_model_arbre_regression, get_model_error_arbre_regression
 =======
 from .knn_classification import train_model_knn, get_model_knn_error
->>>>>>> ceffeb36658623702311dd72f16ef3fc5c10f176
+from .model_arbre import train_model_arbre_classification, get_model_error_arbre_classification
+from .model_arbre import train_model_arbre_regression, get_model_error_arbre_regression
 
 if TYPE_CHECKING:
     from typing import Any
