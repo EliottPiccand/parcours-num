@@ -19,7 +19,7 @@ def cross_validation_arbre_classification(x, y) -> int:
     My_tree_class = DecisionTreeClassifier()
     grid_search = GridSearchCV(My_tree_class, param_grid, cv=5, scoring='accuracy', n_jobs=-1)
 
-    Qgrid_search.fit(x, y)
+    grid_search.fit(x, y)
 
     return grid_search.best_params_
 
