@@ -1,15 +1,11 @@
-from __future__ import annotations
-
-from typing import TYPE_CHECKING
-
+from pandas import DataFrame
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import GridSearchCV
 from sklearn.neighbors import KNeighborsClassifier
-
 from .format_dataset import format_dataset, has_alert_been_raised_next_day
 
-if TYPE_CHECKING:
-    from pandas import DataFrame
+
+x
 
 
 def tune_knn_hyperparameters(x, y):

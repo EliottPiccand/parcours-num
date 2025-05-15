@@ -1,5 +1,4 @@
-import numpy as np
-import pandas as pd
+import pandas as DataFrame
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.neighbors import KNeighborsRegressor
 from sklearn.metrics import mean_squared_error, make_scorer
@@ -23,7 +22,7 @@ def tune_knn_hyperparameters(x, y):
     return grid_search.best_params_
 
 
-def train_model_knn(data: pd.DataFrame) -> KNeighborsRegressor:
+def train_model_knn(data: DataFrame) -> KNeighborsRegressor:
     
     data = format_dataset(data, [0, -24, -48])  
     y = data['alerte_d+1']   
