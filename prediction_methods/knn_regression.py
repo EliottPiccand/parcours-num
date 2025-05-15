@@ -49,6 +49,6 @@ def get_model_knn_error(model: KNeighborsRegressor, data: pd.DataFrame) -> float
 
     y_pred = model.predict(x)
     
-    mse = mean_squared_error(y_true, y_pred)
+    mse = mean_squared_error(y, y_pred)
     
     return mse
