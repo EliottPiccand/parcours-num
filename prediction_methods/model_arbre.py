@@ -12,6 +12,8 @@ import numpy as np
 
 from .format_dataset import format_dataset, has_alert_been_raised_next_day
 
+from .cross_validation_arbre import cross_validation_arbre_classification, cross_validation_arbre_regression
+
 # Select random seed
 random_state = None 
 
@@ -20,8 +22,8 @@ type X = ...
 def train_model_arbre_classification(data_train: DataFrame) -> DecisionTreeClassifier: 
     data = format_dataset(data_train, [0, -24, -48])
 
-    x_train = data_train[['timestamp_h0', 'Valeur_h0', 'timestamp_h-24', 'Valeur_h-24', 'timestamp_h-48', 'Valeur_h-48']] 
-    y_train = data_train["alerte"]  # état d'alerte ou non : état d'alerte : 1, pas d'alerte : 0
+    x_train = data[['timestamp_h0', 'Valeur_h0', 'timestamp_h-24', 'Valeur_h-24', 'timestamp_h-48', 'Valeur_h-48']] 
+    y_train = data["alerte_d+1"]  # état d'alerte ou non : état d'alerte : 1, pas d'alerte : 0
     best_params = cross_validation_arbre_classification(x_train, y_train)
 
     My_tree = DecisionTreeClassifier(**best_params)
@@ -46,8 +48,8 @@ def get_model_error_arbre_classification(model : DecisionTreeClassifier, data_te
 def train_model_arbre_regression(data_train: DataFrame) -> X:
     data = format_dataset(data_train, [0, -24, -48])
 
-    x = data_train[["timestamp_h0", "timestamp_h-24", "timestamp_h-48"]]
-    y = data_train["Valeurd+1"]  # état d'alerte ou non : état d'alerte : 1, pas d'alerte : 0
+    x = data[["timestamp_h0", "timestamp_h-24", "timestamp_h-48"]]
+    y = data["Valeur_d+1"]  # état d'alerte ou non : état d'alerte : 1, pas d'alerte : 0
     best_params = cross_validation_arbre_regression(x, y)
 
     regr = DecisionTreeRegressor(**best_params)
