@@ -4,10 +4,9 @@ from typing import TYPE_CHECKING
 # from .model_arbre import train_model_arbre_classification, get_model_error_arbre
 # from .model_arbre import train_model_arbre_regression
 
-from .knn import train_model_knn, get_model_knn_error
 from .model_arbre import train_model_arbre_classification, get_model_error_arbre_classification
 from .model_arbre import train_model_arbre_regression, get_model_error_arbre_regression
-=======
+
 from .knn_classification import train_model_knn, get_model_knn_error
 from .model_arbre import train_model_arbre_classification, get_model_error_arbre_classification
 from .model_arbre import train_model_arbre_regression, get_model_error_arbre_regression
