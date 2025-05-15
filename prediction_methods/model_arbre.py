@@ -4,6 +4,8 @@ from sklearn.model_selection import KFold
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.tree import DecisionTreeClassifier
 
+from sklearn.metrics import accuracy_score
+
 import scipy as sp
 
 import numpy as np
@@ -16,11 +18,11 @@ random_state = None
 type X = ...
 
 def train_model_arbre_classification(data_train: DataFrame) -> DecisionTreeClassifier: 
-    data = format_dataset(sata_train, [0, -24, -48])
+    data = format_dataset(data_train, [0, -24, -48])
 
-    x_train = data_train[['timestamp_h0', 'Valeur_h0', 'timestamp_h-24', 'Valeur_h-24', 'timestamp_h-48', 'Valeur_h-48']]
+    x_train = data_train[['timestamp_h0', 'Valeur_h0', 'timestamp_h-24', 'Valeur_h-24', 'timestamp_h-48', 'Valeur_h-48']] 
     y_train = data_train["alerte"]  # état d'alerte ou non : état d'alerte : 1, pas d'alerte : 0
-    best_params = cross_validation_arbre_classification(x, y)
+    best_params = cross_validation_arbre_classification(x_train, y_train)
 
     My_tree = DecisionTreeClassifier(**best_params)
 
@@ -39,11 +41,13 @@ def get_model_error_arbre_classification(model : DecisionTreeClassifier, data_te
     return error
 
 
+
+
 def train_model_arbre_regression(data_train: DataFrame) -> X:
-    data = format_dataset(sata_train, [0, -24, -48])
+    data = format_dataset(data_train, [0, -24, -48])
 
     x = data_train[["timestamp_h0", "timestamp_h-24", "timestamp_h-48"]]
-    y = data_train["Valeur"]  # état d'alerte ou non : état d'alerte : 1, pas d'alerte : 0
+    y = data_train["Valeurd+1"]  # état d'alerte ou non : état d'alerte : 1, pas d'alerte : 0
     best_params = cross_validation_arbre_regression(x, y)
 
     regr = DecisionTreeRegressor(**best_params)
@@ -53,7 +57,7 @@ def train_model_arbre_regression(data_train: DataFrame) -> X:
 
 
 
-def get_model_error_arbre_regression(model : DecisionTreeClassifier, data_test: DataFrame) -> float:
+def get_model_error_arbre_regression(model : DecisionTreeRegressor, data_test: DataFrame) -> float:
     x = format_dataset(data_test, [0, -24, -48])[["timestamp_h0", "timestamp_h-24", "timestamp_h-48"]]
     
     y = []
