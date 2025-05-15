@@ -36,7 +36,7 @@ def train_model_knn(data: DataFrame) -> KNeighborsRegressor:
     return knn
 
 
-def get_model_knn_error(model: KNeighborsRegressor, data: pd.DataFrame) -> float:
+def get_model_knn_error(model: KNeighborsRegressor, data: DataFrame) -> float:
   
     data = format_dataset(data, [0, -24, -48])
 
