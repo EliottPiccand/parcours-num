@@ -52,6 +52,11 @@ def get_model_knn_regression_error(model: KNeighborsRegressor, data: DataFrame) 
 
     print("   - Predicting values")
     y_pred = model.predict(x)
+    for i in range(len(y_pred)):
+        if y_pred[i] > 100:
+            y_pred[i] = 1
+        else:
+            y_pred[i] = 0
     
     print("   - Computing accuracy")
     return 1 - accuracy_score(y, y_pred)
