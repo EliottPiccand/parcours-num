@@ -22,7 +22,7 @@ def tune_knn_hyperparameters(x, y):
     return grid_search.best_params_
 
 
-def train_model_knn(data: DataFrame) -> KNeighborsRegressor:
+def train_model_knn_regression(data: DataFrame) -> KNeighborsRegressor:
     
     data = format_dataset(data, [0, -24, -48])  
     y = data['alerte_d+1']   
@@ -36,15 +36,16 @@ def train_model_knn(data: DataFrame) -> KNeighborsRegressor:
     return knn
 
 
-def get_model_knn_error(model: KNeighborsRegressor, data: DataFrame) -> float:
+def get_model_knn_regression_error(model: KNeighborsRegressor, data: DataFrame) -> float:
   
     data = format_dataset(data, [0, -24, -48])
 
     x = data[['timestamp_h0', 'Valeur_h0', 'timestamp_h-24', 'Valeur_h-24', 'timestamp_h-48', 'Valeur_h-48']].copy()
 
-    y = []
-    for ts in x['timestamp_h0']:
-        y.append(has_alert_been_raised_next_day(data, ts))
+    y = [
+        has_alert_been_raised_next_day(data, timestamp)
+        for timestamp in x['timestamp_h0']
+    ]
 
     y_pred = model.predict(x)
     

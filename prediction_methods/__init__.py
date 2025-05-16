@@ -2,7 +2,8 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from .knn_classification import get_model_knn_error, train_model_knn
+from .knn_classification import get_model_knn_classification_error, train_model_knn_classification
+from .knn_regression import get_model_knn_regression_error, train_model_knn_regression
 from .decision_tree_classification import (
     get_model_decision_tree_classification_error,
     train_model_decision_tree_classification,
@@ -23,7 +24,8 @@ if TYPE_CHECKING:
 
 
 PREDICTION_METHODS: tuple[tuple[str, TrainModel, GetModelError], ...] = (
-    # ("knn classifier", train_model_knn, get_model_knn_error),
+    # ("knn classifier", train_model_knn_classification, get_model_knn_classification_error),
+    # ("knn regressor", train_model_knn_regression, get_model_knn_regression_error),
     ("tree classifier", train_model_decision_tree_classification, get_model_decision_tree_classification_error),
     ("tree regressor", train_model_decision_tree_regression, get_model_decision_tree_regression_error),
 )

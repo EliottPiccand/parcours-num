@@ -21,7 +21,7 @@ def tune_knn_hyperparameters(x, y):
 
     return grid_search.best_params_
 
-def train_model_knn(data: DataFrame) -> KNeighborsClassifier:
+def train_model_knn_classification(data: DataFrame) -> KNeighborsClassifier:
     data = format_dataset(data, [0, -24, -48])
     y = data["alerte_d+1"]
     x = data[["timestamp_h0", "Valeur_h0", "timestamp_h-24", "Valeur_h-24", "timestamp_h-48", "Valeur_h-48"]]
@@ -35,7 +35,7 @@ def train_model_knn(data: DataFrame) -> KNeighborsClassifier:
 
     return knn
 
-def get_model_knn_error(model: KNeighborsClassifier, data: DataFrame) -> float:
+def get_model_knn_classification_error(model: KNeighborsClassifier, data: DataFrame) -> float:
     data = format_dataset(data, [0, -24, -48])
     x = data[["timestamp_h0", "Valeur_h0", "timestamp_h-24", "Valeur_h-24", "timestamp_h-48", "Valeur_h-48"]]
     
