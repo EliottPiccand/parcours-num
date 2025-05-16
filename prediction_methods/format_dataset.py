@@ -23,7 +23,7 @@ def format_dataset(data: DataFrame, hours: list[int], day_forecast: int = 1) -> 
 
     h0 is set to midday and alerte_d+day_forecast is True if an alert occurs during the day d+day_forecast
     """
-    print(f"Formatting dataset : hours={hours}, forecast={day_forecast} day{'s' if abs(day_forecast) > 1 else ''}")
+    print(f"   - Formatting dataset : hours={hours}, forecast={day_forecast} day{'s' if abs(day_forecast) > 1 else ''}... ", end="")
 
     hour_offset = min(hours)
     min_time = min(data["timestamp"])
@@ -79,5 +79,5 @@ def format_dataset(data: DataFrame, hours: list[int], day_forecast: int = 1) -> 
 
             current_time += timedelta(days=1)
 
-    print("Dataset formatted")
+    print("done")
     return new_data

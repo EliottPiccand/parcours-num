@@ -1,15 +1,16 @@
 from __future__ import annotations
 
 from typing import TYPE_CHECKING
-# from .model_arbre import train_model_arbre_classification, get_model_error_arbre
-# from .model_arbre import train_model_arbre_regression
 
-from .model_arbre import train_model_arbre_classification, get_model_error_arbre_classification
-from .model_arbre import train_model_arbre_regression, get_model_error_arbre_regression
-
-from .knn_classification import train_model_knn, get_model_knn_error
-from .model_arbre import train_model_arbre_classification, get_model_error_arbre_classification
-from .model_arbre import train_model_arbre_regression, get_model_error_arbre_regression
+from .knn_classification import get_model_knn_error, train_model_knn
+from .decision_tree_classification import (
+    get_model_decision_tree_classification_error,
+    train_model_decision_tree_classification,
+)
+from .decision_tree_regression import (
+    get_model_decision_tree_regression_error,
+    train_model_decision_tree_regression,
+)
 
 if TYPE_CHECKING:
     from typing import Any
@@ -22,7 +23,7 @@ if TYPE_CHECKING:
 
 
 PREDICTION_METHODS: tuple[tuple[str, TrainModel, GetModelError], ...] = (
-    #("knn classifier", train_model_knn, get_model_knn_error),
-    ("tree classifier", train_model_arbre_classification, get_model_error_arbre_classification),
-    ("tree regressor", train_model_arbre_regression, get_model_error_arbre_regression),
+    # ("knn classifier", train_model_knn, get_model_knn_error),
+    ("tree classifier", train_model_decision_tree_classification, get_model_decision_tree_classification_error),
+    ("tree regressor", train_model_decision_tree_regression, get_model_decision_tree_regression_error),
 )
