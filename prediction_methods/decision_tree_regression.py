@@ -27,6 +27,7 @@ def train_model_decision_tree_regression(data_train: DataFrame) -> DecisionTreeR
 
     print("   - Performing cross validation")
     best_params = tune_best_parameters(x, y)
+    print("     > Best params :", best_params)
 
     print("   - Fitting best model found")
     tree = DecisionTreeRegressor(**best_params)
@@ -47,5 +48,4 @@ def get_model_decision_tree_regression_error(model: DecisionTreeRegressor, data_
     y_pred = model.predict(x)
 
     print("   - Computing accuracy")
-    error = 1 - accuracy_score(y, y_pred)
-    return error
+    return 1 - accuracy_score(y, y_pred)

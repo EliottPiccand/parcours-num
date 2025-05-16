@@ -30,6 +30,7 @@ def train_model_knn_regression(data: DataFrame) -> KNeighborsRegressor:
 
     print("   - Performing cross validation")
     best_params = tune_knn_hyperparameters(x, y)
+    print("     > Best params :", best_params)
 
     print("   - Fitting best model found")
     knn = KNeighborsRegressor(**best_params)
@@ -53,5 +54,4 @@ def get_model_knn_regression_error(model: KNeighborsRegressor, data: DataFrame) 
     y_pred = model.predict(x)
     
     print("   - Computing accuracy")
-    error = 1 - accuracy_score(y, y_pred)
-    return error
+    return 1 - accuracy_score(y, y_pred)

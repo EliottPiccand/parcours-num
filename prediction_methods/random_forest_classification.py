@@ -28,6 +28,7 @@ def train_model_random_forest(data: DataFrame) -> RandomForestClassifier:
 
     print("   - Performing cross validation")
     best_params = tune_random_forest_hyperparameters(x, y)
+    print("     > Best params :", best_params)
 
     print("   - Fitting best model found")
     rf = RandomForestClassifier(**best_params, random_state=42)
@@ -50,5 +51,4 @@ def get_model_random_forest_error(model: RandomForestClassifier, data: DataFrame
     y_pred = model.predict(x)
 
     print("   - Computing accuracy")
-    error_rate = 1 - accuracy_score(y, y_pred)
-    return error_rate
+    return 1 - accuracy_score(y, y_pred)

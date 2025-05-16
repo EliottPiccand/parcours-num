@@ -28,6 +28,7 @@ def train_model_decision_tree_classification(data_train: DataFrame) -> DecisionT
 
     print("   - Performing cross validation")
     best_params = tune_best_parameters(x, y)
+    print("     > Best params :", best_params)
 
     print("   - Fitting best model found")
     tree = DecisionTreeClassifier(**best_params)
@@ -48,5 +49,4 @@ def get_model_decision_tree_classification_error(model : DecisionTreeClassifier,
     y_pred = model.predict(x)
 
     print("   - Computing accuracy")
-    error = 1 - accuracy_score(y, y_pred)
-    return error
+    return 1 - accuracy_score(y, y_pred)

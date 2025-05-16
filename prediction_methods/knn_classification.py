@@ -28,6 +28,7 @@ def train_model_knn_classification(data: DataFrame) -> KNeighborsClassifier:
 
     print("   - Performing cross validation")
     best_params = tune_knn_hyperparameters(x, y)
+    print("     > Best params :", best_params)
 
     print("   - Fitting best model found")
     knn = KNeighborsClassifier(**best_params)
@@ -49,5 +50,4 @@ def get_model_knn_classification_error(model: KNeighborsClassifier, data: DataFr
     y_pred = model.predict(x)
 
     print("   - Computing accuracy")
-    error_rate = 1 - accuracy_score(y, y_pred)
-    return error_rate
+    return 1 - accuracy_score(y, y_pred)
