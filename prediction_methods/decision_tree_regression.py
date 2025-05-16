@@ -25,8 +25,10 @@ def train_model_decision_tree_regression(data_train: DataFrame) -> DecisionTreeR
     x = data[["timestamp_h0", "timestamp_h-24", "timestamp_h-48"]]
     y = data["Valeur_d+1"]
 
+    print("   - Performing cross validation")
     best_params = tune_best_parameters(x, y)
 
+    print("   - Fitting best model found")
     tree = DecisionTreeRegressor(**best_params)
     tree.fit(x, y)
 
@@ -35,11 +37,15 @@ def train_model_decision_tree_regression(data_train: DataFrame) -> DecisionTreeR
 def get_model_decision_tree_regression_error(model: DecisionTreeRegressor, data_test: DataFrame) -> float:
     x = format_dataset(data_test, [0, -24, -48])[["timestamp_h0", "timestamp_h-24", "timestamp_h-48"]]
     
+    print("   - Computing real values")
     y = [
         has_alert_been_raised_next_day(data_test, timestamp)
         for timestamp in x["timestamp_h0"]
     ]
 
-    y_prediction = model.predict(x)
-    error = 1 - accuracy_score(y, y_prediction)
+    print("   - Predicting values")
+    y_pred = model.predict(x)
+
+    print("   - Computing accuracy")
+    error = 1 - accuracy_score(y, y_pred)
     return error

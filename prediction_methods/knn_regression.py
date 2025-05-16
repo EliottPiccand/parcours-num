@@ -28,8 +28,10 @@ def train_model_knn_regression(data: DataFrame) -> KNeighborsRegressor:
     y = data['alerte_d+1']   
     x = data[['timestamp_h0', 'Valeur_h0', 'timestamp_h-24', 'Valeur_h-24', 'timestamp_h-48', 'Valeur_h-48']]
 
+    print("   - Performing cross validation")
     best_params = tune_knn_hyperparameters(x, y)
 
+    print("   - Fitting best model found")
     knn = KNeighborsRegressor(**best_params)
     knn.fit(x, y)
 
@@ -37,18 +39,19 @@ def train_model_knn_regression(data: DataFrame) -> KNeighborsRegressor:
 
 
 def get_model_knn_regression_error(model: KNeighborsRegressor, data: DataFrame) -> float:
-  
     data = format_dataset(data, [0, -24, -48])
 
     x = data[['timestamp_h0', 'Valeur_h0', 'timestamp_h-24', 'Valeur_h-24', 'timestamp_h-48', 'Valeur_h-48']].copy()
 
+    print("   - Computing real values")
     y = [
         has_alert_been_raised_next_day(data, timestamp)
         for timestamp in x['timestamp_h0']
     ]
 
+    print("   - Predicting values")
     y_pred = model.predict(x)
     
+    print("   - Computing accuracy")
     error = 1 - accuracy_score(y, y_pred)
-    
     return error

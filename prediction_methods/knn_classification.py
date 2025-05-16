@@ -49,6 +49,5 @@ def get_model_knn_classification_error(model: KNeighborsClassifier, data: DataFr
     y_pred = model.predict(x)
 
     print("   - Computing accuracy")
-    accuracy = accuracy_score(y, y_pred)
-    error_rate = 1 - accuracy
+    error_rate = 1 - accuracy_score(y, y_pred)
     return error_rate

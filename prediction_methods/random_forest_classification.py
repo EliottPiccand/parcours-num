@@ -26,8 +26,10 @@ def train_model_random_forest(data: DataFrame) -> RandomForestClassifier:
     y = data["alerte_d+1"]
     x = data[["timestamp_h0", "Valeur_h0", "timestamp_h-24", "Valeur_h-24", "timestamp_h-48", "Valeur_h-48"]]
 
+    print("   - Performing cross validation")
     best_params = tune_random_forest_hyperparameters(x, y)
 
+    print("   - Fitting best model found")
     rf = RandomForestClassifier(**best_params, random_state=42)
     rf.fit(x, y)
 
@@ -38,12 +40,15 @@ def get_model_random_forest_error(model: RandomForestClassifier, data: DataFrame
 
     x = data[["timestamp_h0", "Valeur_h0", "timestamp_h-24", "Valeur_h-24", "timestamp_h-48", "Valeur_h-48"]]
 
+    print("   - Computing real values")
     y = [
         has_alert_been_raised_next_day(data, ts)
         for ts in x["timestamp_h0"]
     ]
 
+    print("   - Predicting values")
     y_pred = model.predict(x)
-    accuracy = accuracy_score(y, y_pred)
-    error_rate = 1 - accuracy
+
+    print("   - Computing accuracy")
+    error_rate = 1 - accuracy_score(y, y_pred)
     return error_rate
