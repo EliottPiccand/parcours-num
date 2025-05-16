@@ -24,8 +24,8 @@ if TYPE_CHECKING:
 
 
 PREDICTION_METHODS: tuple[tuple[str, TrainModel, GetModelError], ...] = (
-    # ("knn classifier", train_model_knn_classification, get_model_knn_classification_error),
+    ("knn classifier", train_model_knn_classification, get_model_knn_classification_error),
     # ("knn regressor", train_model_knn_regression, get_model_knn_regression_error),
-    ("tree classifier", train_model_decision_tree_classification, get_model_decision_tree_classification_error),
-    ("tree regressor", train_model_decision_tree_regression, get_model_decision_tree_regression_error),
+    # ("tree classifier", train_model_decision_tree_classification, get_model_decision_tree_classification_error),
+    # ("tree regressor", train_model_decision_tree_regression, get_model_decision_tree_regression_error),
 )

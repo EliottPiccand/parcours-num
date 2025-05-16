@@ -27,6 +27,7 @@ print()
 print()
 
 USE_REDUCED_DATA = True
+environ["USE_REDUCED_DATA"] = str(USE_REDUCED_DATA)
 if USE_REDUCED_DATA:
     print("Using reduced data")
 

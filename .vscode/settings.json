@@ -8,6 +8,7 @@
         "maxfev",
         "Mesure",
         "minkowski",
+        "ndarray",
         "Organisme",
         "Polair",
         "pyreadr",
