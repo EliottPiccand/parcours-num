@@ -9,7 +9,7 @@ station_ids = unique(train_data["idPolair"])
 station_ids_to_keep = station_ids[:ID_TO_KEEP_COUNT]
 
 new_train_data = train_data[train_data["idPolair"].isin(station_ids_to_keep)]
-new_train_data.to_csv("data/computed/reduced_train_data.csv")
+new_train_data.to_csv("data/computed/reduced_train_data.csv", index=False)
 
 new_test_data = test_data[test_data["idPolair"].isin(station_ids_to_keep)]
-new_test_data.to_csv("data/computed/reduced_test_data.csv")
+new_test_data.to_csv("data/computed/reduced_test_data.csv", index=False)

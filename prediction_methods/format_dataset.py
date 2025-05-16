@@ -1,8 +1,9 @@
 from __future__ import annotations
 
-from pandas import DataFrame
-from numpy import unique, min, max, any
 from datetime import datetime, timedelta
+
+from numpy import any, max, min, unique, isnan
+from pandas import DataFrame
 
 
 def has_alert_been_raised_next_day(data: DataFrame, today_timestamp: float, day_forecast: int = 1) -> bool:
@@ -11,8 +12,10 @@ def has_alert_been_raised_next_day(data: DataFrame, today_timestamp: float, day_
     tomorrow_start = datetime(tomorrow.year, tomorrow.month, tomorrow.day, 0, 0, 0)
     tomorrow_end = datetime(tomorrow.year, tomorrow.month, tomorrow.day, 23, 59, 0)
 
-    data = data[tomorrow_start.timestamp() <= data["timestamp"]]
-    data = data[data["timestamp"] <= tomorrow_end.timestamp()]
+    timestamp_column = "timestamp" if "timestamp" in data.columns else "timestamp_h0"
+
+    data = data[tomorrow_start.timestamp() <= data[timestamp_column]]
+    data = data[data[timestamp_column] <= tomorrow_end.timestamp()]
     return any(data["alerte"])
 
 def format_dataset(data: DataFrame, hours: list[int], day_forecast: int = 1) -> DataFrame:
@@ -37,7 +40,6 @@ def format_dataset(data: DataFrame, hours: list[int], day_forecast: int = 1) -> 
     columns = list(data.columns)
     columns.remove("timestamp")
     columns.remove("Valeur")
-    columns.remove("alerte")
     if 'date' in columns:
         columns.remove("date")
     for hour in hours:
@@ -49,35 +51,52 @@ def format_dataset(data: DataFrame, hours: list[int], day_forecast: int = 1) -> 
     new_data = DataFrame(columns=columns)
 
     for station_id in unique(data["idPolair"]):
-        current_time = start_time
+        current_time = start_time - timedelta(days=1)
         station_values = data[data["idPolair"] == station_id]
 
         while current_time.timestamp() <= max_time:
+            current_time += timedelta(days=1)
 
             row_h0 = station_values[station_values["timestamp"] == current_time.timestamp()]
+
+            if (
+                   len(row_h0["Organisme"].values) == 0
+                or len(row_h0["Station"].values)   == 0
+                or len(row_h0["idPolair"].values)  == 0
+                or len(row_h0["alerte"].values)  == 0
+            ):
+                continue
+
             new_row = [
-                row_h0["Organisme"],
-                row_h0["Station"],
-                row_h0["idPolair"],
+                row_h0["Organisme"].values[0],
+                row_h0["Station"].values[0],
+                row_h0["idPolair"].values[0],
+                row_h0["alerte"].values[0],
             ]
 
             for hour in hours:
                 row_h_plus_hour = station_values[station_values["timestamp"] == (current_time + timedelta(hours=hour)).timestamp()]
 
+                if (
+                       len(row_h_plus_hour["timestamp"].values) == 0
+                    or len(row_h_plus_hour["Valeur"])           == 0
+                    or isnan(row_h_plus_hour["Valeur"].values[0])
+                ):
+                    break
                 new_row += [
-                    row_h_plus_hour["timestamp"],
-                    row_h_plus_hour["Valeur"],
+                    row_h_plus_hour["timestamp"].values[0],
+                    row_h_plus_hour["Valeur"].values[0],
+                ]
+            else:
+                row_d_plus_day_forecast = station_values[station_values["timestamp"] == (current_time + timedelta(days=day_forecast)).timestamp()]
+                if len(row_d_plus_day_forecast["Valeur"].values) == 0:
+                    continue
+                new_row += [
+                    has_alert_been_raised_next_day(station_values, current_time.timestamp()),
+                    row_d_plus_day_forecast["Valeur"].values[0],
                 ]
 
-            row_d_plus_day_forecast = station_values[station_values["timestamp"] == (current_time + timedelta(days=day_forecast)).timestamp()]
-            new_row += [
-                has_alert_been_raised_next_day(station_values, current_time.timestamp()),
-                row_d_plus_day_forecast["Valeur"]
-            ]
+                new_data.loc[len(new_data)] = [len(new_data)] + new_row
 
-            new_data.loc[len(new_data)] = [len(new_data)] + new_row
-
-            current_time += timedelta(days=1)
-
-    print("done")
+    print(f"done (computed {len(new_data)} rows)")
     return new_data
