@@ -9,9 +9,11 @@ from pickle import load as load_python_object
 from time import perf_counter_ns as get_time_ns
 from typing import TYPE_CHECKING
 
+import matplotlib.pyplot as plt
 from numpy import int64
 from pandas import DatetimeIndex, read_csv
 from pyreadr import read_r
+from sklearn.metrics import ConfusionMatrixDisplay
 
 from cleaning_methods import CLEANING_METHODS
 from prediction_methods import PREDICTION_METHODS, Predictor
@@ -33,6 +35,7 @@ if USE_REDUCED_DATA:
 
 DATA_DIR = Path("data")
 COMPUTED_DATA_DIR = DATA_DIR / "computed"
+MATRICES_DIR = COMPUTED_DATA_DIR / "confusion_matrices"
 
 # Training & Testing data
 def load_rds(filename: Path) -> DataFrame:
@@ -80,8 +83,6 @@ def display_time_diff_to_now(start: int) -> str:
     return str(timedelta(seconds=(get_time_ns() - start) / 1e9))
 
 # Compare cleaning and prediction methods
-min_error = float("inf")
-min_error_arg = None
 start_time = get_time_ns()
 for (
     (cleaning_method_name, cleaning_method),
@@ -128,20 +129,19 @@ for (
                 save_python_object(model, file)
 
     print("- Estimating model error")
-    error = predictor.get_error(model, TEST_DATA)
+    confusion_matrix = predictor.get_confusion_matrix(model, TEST_DATA)
 
-    if error < min_error:
-        min_error = error
-        min_error_arg = (cleaning_method_name, prediction_method_name)
+    print("- Saving confusion matrix")
+    plt.figure()
+    display = ConfusionMatrixDisplay(confusion_matrix=confusion_matrix, display_labels=("Pas d'Alerte", "Alerte"))
+    display.plot(cmap=plt.cm.Blues)
+    plt.title(f"Confusion Matrix for {cleaning_method_name} & {prediction_method_name}")
+    MATRICES_DIR.mkdir(exist_ok=True)
+    plt.savefig(MATRICES_DIR / f"{cleaning_method_name.replace(" ", "_")}-{prediction_method_name}.png")
 
     print(f"Compute time      : {display_time_diff_to_now(method_start_time)}")
-    print(f"> error : {error:.3f}%")
 
 print()
 print()
 print()
-print(f"Total Compute Time : {display_time_diff_to_now(start_time)}")
-print("Best methods : ")
-print("- Cleaning method   :", min_error_arg[0])
-print("- Prediction method :", min_error_arg[1])
-print("- Error             :", min_error)
+print(f"Done ! ({display_time_diff_to_now(start_time)})")

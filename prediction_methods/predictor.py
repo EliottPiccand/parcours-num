@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 
 from numpy import array
 from pandas import DataFrame
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import GridSearchCV
 
 from .format_dataset import format_dataset, has_alert_been_raised_next_day
@@ -31,6 +31,7 @@ class Predictor[T]:
         self.is_regressor = is_regressor
     
     def tune_hyperparameters(self, x: ndarray, y: ndarray) -> dict:
+        """Perform cross validation to find the best hyperparameters."""
         if getenv("USE_REDUCED_DATA", "False") == "True":
             param_grid = self.reduced_cross_validation_params
         else:
@@ -42,6 +43,7 @@ class Predictor[T]:
         return grid_search.best_params_
 
     def train(self, data: DataFrame) -> T:
+        """Train the model using train data."""
         data = format_dataset(data, self.hours)
 
         x = data[self.input_features].to_numpy()
@@ -60,7 +62,8 @@ class Predictor[T]:
 
         return model
     
-    def get_error(self, model: T, data: DataFrame) -> float:
+    def get_confusion_matrix(self, model: T, data: DataFrame) -> ndarray:
+        """Returns the confusion matrix using test data."""
         data = format_dataset(data, self.hours)
     
         x = data[self.input_features]
@@ -78,5 +81,5 @@ class Predictor[T]:
         if self.is_regressor:
             y_pred = y_pred > 100
 
-        print("   - Computing accuracy")
-        return 1 - accuracy_score(y, y_pred)
+        print("   - Computing confusion matrix")
+        return confusion_matrix(y, y_pred)

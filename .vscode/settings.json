@@ -3,6 +3,7 @@
         "alerte",
         "arange",
         "chebyshev",
+        "cmap",
         "gini",
         "isin",
         "maxfev",
@@ -11,6 +12,7 @@
         "ndarray",
         "Organisme",
         "Polair",
+        "pyobj",
         "pyreadr",
         "Valeur"
     ]
