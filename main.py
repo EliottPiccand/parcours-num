@@ -14,7 +14,7 @@ from pandas import DatetimeIndex, read_csv
 from pyreadr import read_r
 
 from cleaning_methods import CLEANING_METHODS
-from prediction_methods import PREDICTION_METHODS
+from prediction_methods import PREDICTION_METHODS, Predictor
 
 if TYPE_CHECKING:
     from pandas import DataFrame
@@ -83,7 +83,11 @@ def display_time_diff_to_now(start: int) -> str:
 min_error = float("inf")
 min_error_arg = None
 start_time = get_time_ns()
-for (cleaning_method_name, cleaning_method), (prediction_method_name, train_model, get_model_error) in product(CLEANING_METHODS, PREDICTION_METHODS):
+for (
+    (cleaning_method_name, cleaning_method),
+    (model_class, is_regressor, hours, cross_validation_params, reduced_cross_validation_params),
+) in product(CLEANING_METHODS, PREDICTION_METHODS):
+    prediction_method_name = model_class.__name__
     print()
     print("Cleaning method   :", cleaning_method_name)
     print("Prediction method :", prediction_method_name)
@@ -105,9 +109,11 @@ for (cleaning_method_name, cleaning_method), (prediction_method_name, train_mode
             print("- Saving cleaned train data")
             cleaned_train_data.to_csv(cleaned_data_path)
 
+    predictor = Predictor(model_class, is_regressor, hours, cross_validation_params, reduced_cross_validation_params)
+
     if USE_REDUCED_DATA:
         print("- Training reduced model")
-        model = train_model(cleaned_train_data)
+        model = predictor.train(cleaned_train_data)
     else:
         model_file_path = COMPUTED_DATA_DIR / "models" / f"{cleaning_method_name.replace(' ', '_')}-{prediction_method_name.replace(' ', '_')}.pyobj"
         model_file_path.parent.mkdir(exist_ok=True)
@@ -116,13 +122,13 @@ for (cleaning_method_name, cleaning_method), (prediction_method_name, train_mode
             model = load_python_object(model_file_path.read_bytes())
         else:
             print("- Training model")
-            model = train_model(cleaned_train_data)
+            model = predictor.train(cleaned_train_data)
             print("- Saving model")
             with model_file_path.open("wb") as file:
                 save_python_object(model, file)
 
     print("- Estimating model error")
-    error = get_model_error(model, TEST_DATA)
+    error = predictor.get_error(model, TEST_DATA)
 
     if error < min_error:
         min_error = error
@@ -135,10 +141,7 @@ print()
 print()
 print()
 print(f"Total Compute Time : {display_time_diff_to_now(start_time)}")
-# print("Best methods : ")
-# print("- Cleaning method   :", min_error_arg[0])
-# print("- Prediction method :", min_error_arg[1])
-# print("- Error             :", min_error)
-
-while True:
-    pass
+print("Best methods : ")
+print("- Cleaning method   :", min_error_arg[0])
+print("- Prediction method :", min_error_arg[1])
+print("- Error             :", min_error)
