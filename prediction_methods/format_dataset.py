@@ -96,7 +96,7 @@ def format_dataset(data: DataFrame, hours: list[int], day_forecast: int = 1) -> 
                     row_d_plus_day_forecast["Valeur"].values[0],
                 ]
 
-                new_data.loc[len(new_data)] = [len(new_data)] + new_row
+                new_data.loc[len(new_data)] = new_row
 
     print(f"done (computed {len(new_data)} rows)")
     return new_data

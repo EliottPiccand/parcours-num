@@ -28,7 +28,7 @@ print()
 print()
 print()
 
-USE_REDUCED_DATA = True
+USE_REDUCED_DATA = False
 environ["USE_REDUCED_DATA"] = str(USE_REDUCED_DATA)
 if USE_REDUCED_DATA:
     print("Using reduced data")
@@ -64,7 +64,7 @@ else:
         TRAIN_DATA = default_data_filter(TRAIN_DATA) # ['Organisme', 'Station', 'Valeur', 'idPolair', 'timestamp', 'alerte']
         print("Saving filtered training data")
         SAVED_TRAIN_DATA_PATH.parent.mkdir(exist_ok=True)
-        TRAIN_DATA.to_csv(SAVED_TRAIN_DATA_PATH)
+        TRAIN_DATA.to_csv(SAVED_TRAIN_DATA_PATH, index=False)
 
     TEST_DATA_PATH = DATA_DIR / "test_data_1.rds"
     SAVED_TEST_DATA_PATH = COMPUTED_DATA_DIR / "test_data_1.csv"
@@ -77,7 +77,7 @@ else:
         TEST_DATA = default_data_filter(TEST_DATA) # ['Organisme', 'Station', 'Valeur', 'idPolair', 'timestamp', 'alerte']
         print("Saving filtered test data")
         SAVED_TEST_DATA_PATH.parent.mkdir(exist_ok=True)
-        TEST_DATA.to_csv(SAVED_TEST_DATA_PATH)
+        TEST_DATA.to_csv(SAVED_TEST_DATA_PATH, index=False)
 
 def display_time_diff_to_now(start: int) -> str:
     return str(timedelta(seconds=(get_time_ns() - start) / 1e9))
@@ -108,7 +108,7 @@ for (
             print("- Computing cleaned train data")
             cleaned_train_data = cleaning_method(TRAIN_DATA)
             print("- Saving cleaned train data")
-            cleaned_train_data.to_csv(cleaned_data_path)
+            cleaned_train_data.to_csv(cleaned_data_path, index=False)
 
     predictor = Predictor(model_class, is_regressor, hours, cross_validation_params, reduced_cross_validation_params)
 
@@ -120,7 +120,8 @@ for (
         model_file_path.parent.mkdir(exist_ok=True)
         if model_file_path.exists():
             print(" Loading model")
-            model = load_python_object(model_file_path.read_bytes())
+            with model_file_path.open("rb") as file:
+                model = load_python_object(file)
         else:
             print("- Training model")
             model = predictor.train(cleaned_train_data)
