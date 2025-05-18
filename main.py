@@ -119,7 +119,7 @@ for (
         model_file_path = COMPUTED_DATA_DIR / "models" / f"{cleaning_method_name.replace(' ', '_')}-{prediction_method_name.replace(' ', '_')}.pyobj"
         model_file_path.parent.mkdir(exist_ok=True)
         if model_file_path.exists():
-            print(" Loading model")
+            print(" - Loading model")
             with model_file_path.open("rb") as file:
                 model = load_python_object(file)
         else:
