@@ -1,6 +1,4 @@
-from pandas import read_csv
-from cleaning_methods.guesstimate_sin import tmp
+from pandas import DataFrame
 
-data = read_csv("data/computed/guesstimate_sin.csv")
-data = tmp(data)
-data.to_csv("data/computed/guesstimate_sin_2.csv")
+data = DataFrame()
+data.groupby()
