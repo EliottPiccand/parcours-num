@@ -1,0 +1,690 @@
+[
+  {
+    "estimator": "KNeighborsClassifier",
+    "cleaning_method": "TEST_DATA",
+    "best_params": {
+      "7001": {
+        "metric": "minkowski",
+        "n_neighbors": 11,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -4,
+          -23
+        ]
+      },
+      "7004": {
+        "metric": "chebyshev",
+        "n_neighbors": 11,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -2,
+          -14
+        ]
+      },
+      "7009": {
+        "metric": "minkowski",
+        "n_neighbors": 3,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -6,
+          -23
+        ]
+      },
+      "7012": {
+        "metric": "minkowski",
+        "n_neighbors": 3,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -1,
+          -20
+        ]
+      },
+      "7013": {
+        "metric": "minkowski",
+        "n_neighbors": 5,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -7,
+          -10
+        ]
+      },
+      "7014": {
+        "metric": "minkowski",
+        "n_neighbors": 3,
+        "p": 2,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -1,
+          -20
+        ]
+      },
+      "7015": {
+        "metric": "minkowski",
+        "n_neighbors": 11,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -4,
+          -14
+        ]
+      },
+      "7016": {
+        "metric": "minkowski",
+        "n_neighbors": 7,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -1,
+          -7
+        ]
+      },
+      "7017": {
+        "metric": "minkowski",
+        "n_neighbors": 5,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -2,
+          -23
+        ]
+      },
+      "7018": {
+        "metric": "chebyshev",
+        "n_neighbors": 11,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -4,
+          -14
+        ]
+      },
+      "7020": {
+        "metric": "minkowski",
+        "n_neighbors": 11,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -7,
+          -36
+        ]
+      },
+      "7022": {
+        "metric": "minkowski",
+        "n_neighbors": 11,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -5,
+          -6
+        ]
+      },
+      "7029": {
+        "metric": "minkowski",
+        "n_neighbors": 7,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -4,
+          -23
+        ]
+      },
+      "7031": {
+        "metric": "chebyshev",
+        "n_neighbors": 5,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -2,
+          -13
+        ]
+      },
+      "7032": {
+        "metric": "chebyshev",
+        "n_neighbors": 7,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -4,
+          -36
+        ]
+      },
+      "7045": {
+        "metric": "minkowski",
+        "n_neighbors": 3,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -1,
+          -25
+        ]
+      },
+      "7049": {
+        "metric": "minkowski",
+        "n_neighbors": 3,
+        "p": 1,
+        "weights": "distance",
+        "hours": [
+          0,
+          -4,
+          -25
+        ]
+      },
+      "15013": {
+        "metric": "chebyshev",
+        "n_neighbors": 5,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -11,
+          -14
+        ]
+      },
+      "15017": {
+        "metric": "minkowski",
+        "n_neighbors": 3,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -3,
+          -22
+        ]
+      },
+      "15018": {
+        "metric": "chebyshev",
+        "n_neighbors": 9,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -2,
+          -26
+        ]
+      },
+      "15031": {
+        "metric": "minkowski",
+        "n_neighbors": 11,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -9,
+          -16
+        ]
+      },
+      "15038": {
+        "metric": "minkowski",
+        "n_neighbors": 5,
+        "p": 1,
+        "weights": "distance",
+        "hours": [
+          0,
+          -4,
+          -27
+        ]
+      },
+      "15043": {
+        "metric": "minkowski",
+        "n_neighbors": 3,
+        "p": 1,
+        "weights": "distance",
+        "hours": [
+          0,
+          -4,
+          -7
+        ]
+      },
+      "15045": {
+        "metric": "minkowski",
+        "n_neighbors": 9,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -1,
+          -5
+        ]
+      },
+      "15048": {
+        "metric": "minkowski",
+        "n_neighbors": 3,
+        "p": 1,
+        "weights": "distance",
+        "hours": [
+          0,
+          -4,
+          -6
+        ]
+      },
+      "20004": {
+        "metric": "minkowski",
+        "n_neighbors": 9,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -4,
+          -26
+        ]
+      },
+      "20017": {
+        "metric": "minkowski",
+        "n_neighbors": 11,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -7,
+          -26
+        ]
+      },
+      "20037": {
+        "metric": "chebyshev",
+        "n_neighbors": 11,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -3,
+          -19
+        ]
+      },
+      "20045": {
+        "metric": "chebyshev",
+        "n_neighbors": 7,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -4,
+          -25
+        ]
+      },
+      "20046": {
+        "metric": "minkowski",
+        "n_neighbors": 3,
+        "p": 2,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -2,
+          -3
+        ]
+      },
+      "20047": {
+        "metric": "minkowski",
+        "n_neighbors": 11,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -4,
+          -28
+        ]
+      },
+      "20048": {
+        "metric": "minkowski",
+        "n_neighbors": 9,
+        "p": 2,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -6,
+          -23
+        ]
+      },
+      "20049": {
+        "metric": "minkowski",
+        "n_neighbors": 5,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -2,
+          -26
+        ]
+      },
+      "20061": {
+        "metric": "chebyshev",
+        "n_neighbors": 3,
+        "p": 1,
+        "weights": "distance",
+        "hours": [
+          0,
+          -2,
+          -21
+        ]
+      },
+      "20062": {
+        "metric": "minkowski",
+        "n_neighbors": 3,
+        "p": 1,
+        "weights": "distance",
+        "hours": [
+          0,
+          -2,
+          -3
+        ]
+      },
+      "27002": {
+        "metric": "minkowski",
+        "n_neighbors": 5,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -3,
+          -25
+        ]
+      },
+      "27003": {
+        "metric": "chebyshev",
+        "n_neighbors": 11,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -2,
+          -12
+        ]
+      },
+      "27004": {
+        "metric": "minkowski",
+        "n_neighbors": 7,
+        "p": 2,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -1,
+          -25
+        ]
+      },
+      "27005": {
+        "metric": "minkowski",
+        "n_neighbors": 11,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -8,
+          -27
+        ]
+      },
+      "27007": {
+        "metric": "minkowski",
+        "n_neighbors": 11,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -6,
+          -27
+        ]
+      },
+      "27010": {
+        "metric": "minkowski",
+        "n_neighbors": 5,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -9,
+          -34
+        ]
+      },
+      "29421": {
+        "metric": "minkowski",
+        "n_neighbors": 11,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -8,
+          -31
+        ]
+      },
+      "29423": {
+        "metric": "minkowski",
+        "n_neighbors": 3,
+        "p": 1,
+        "weights": "distance",
+        "hours": [
+          0,
+          -5,
+          -16
+        ]
+      },
+      "29424": {
+        "metric": "minkowski",
+        "n_neighbors": 3,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -4,
+          -25
+        ]
+      },
+      "29426": {
+        "metric": "minkowski",
+        "n_neighbors": 9,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -2,
+          -25
+        ]
+      },
+      "29439": {
+        "metric": "chebyshev",
+        "n_neighbors": 3,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -2,
+          -20
+        ]
+      },
+      "29440": {
+        "metric": "minkowski",
+        "n_neighbors": 9,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -1,
+          -21
+        ]
+      },
+      "33101": {
+        "metric": "minkowski",
+        "n_neighbors": 5,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -4,
+          -36
+        ]
+      },
+      "33102": {
+        "metric": "chebyshev",
+        "n_neighbors": 3,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -2,
+          -13
+        ]
+      },
+      "33111": {
+        "metric": "minkowski",
+        "n_neighbors": 11,
+        "p": 1,
+        "weights": "distance",
+        "hours": [
+          0,
+          -1,
+          -13
+        ]
+      },
+      "33120": {
+        "metric": "minkowski",
+        "n_neighbors": 11,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -3,
+          -26
+        ]
+      },
+      "33121": {
+        "metric": "chebyshev",
+        "n_neighbors": 5,
+        "p": 1,
+        "weights": "distance",
+        "hours": [
+          0,
+          -2,
+          -13
+        ]
+      },
+      "33201": {
+        "metric": "chebyshev",
+        "n_neighbors": 11,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -1,
+          -26
+        ]
+      },
+      "33202": {
+        "metric": "minkowski",
+        "n_neighbors": 11,
+        "p": 2,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -8,
+          -25
+        ]
+      },
+      "33211": {
+        "metric": "chebyshev",
+        "n_neighbors": 11,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -4,
+          -36
+        ]
+      },
+      "33220": {
+        "metric": "minkowski",
+        "n_neighbors": 3,
+        "p": 1,
+        "weights": "distance",
+        "hours": [
+          0,
+          -2,
+          -27
+        ]
+      },
+      "33302": {
+        "metric": "chebyshev",
+        "n_neighbors": 9,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -1,
+          -26
+        ]
+      },
+      "33305": {
+        "metric": "minkowski",
+        "n_neighbors": 11,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -3,
+          -30
+        ]
+      },
+      "36001": {
+        "metric": "chebyshev",
+        "n_neighbors": 9,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -3,
+          -21
+        ]
+      },
+      "36002": {
+        "metric": "minkowski",
+        "n_neighbors": 5,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -3,
+          -23
+        ]
+      },
+      "36019": {
+        "metric": "chebyshev",
+        "n_neighbors": 9,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -3,
+          -14
+        ]
+      },
+      "36021": {
+        "metric": "chebyshev",
+        "n_neighbors": 9,
+        "p": 1,
+        "weights": "uniform",
+        "hours": [
+          0,
+          -2,
+          -15
+        ]
+      }
+    }
+  }
+]

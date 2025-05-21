@@ -25,40 +25,40 @@ __all__ = (
 )
 
 PREDICTION_METHODS: tuple[tuple[Model, bool, list[int], dict, dict], ...] = (
-    (
-        KNeighborsClassifier,
-        False,
-        [0, -24, -48],
-        {
-            "n_neighbors": [3, 5, 7, 9, 11, 13, 15],
-            "weights": ["uniform", "distance"],
-            "metric": ["chebyshev", "minkowski"],
-            "p": [1, 2, 3],
-        },
-        {
-            "n_neighbors": [3, 5],
-            "weights": ["uniform", "distance"],
-            "metric": ["chebyshev", "minkowski"],
-            "p": [1, 2],
-        },
-    ),
-    (
-        KNeighborsRegressor,
-        True,
-        [0, -24, -48],
-        {
-            "n_neighbors": [3, 5, 7, 9, 11, 13, 15],
-            "weights": ["uniform", "distance"],
-            "metric": ["chebyshev", "minkowski"],
-            "p": [1, 2, 3],
-        },
-        {
-            "n_neighbors": [3, 5],
-            "weights": ["uniform", "distance"],
-            "metric": ["chebyshev", "minkowski"],
-            "p": [1, 2],
-        },
-    ),
+    # (
+    #     KNeighborsClassifier,
+    #     False,
+    #     [0, -24, -48],
+    #     {
+    #         "n_neighbors": [3, 5, 7, 9, 11, 13, 15],
+    #         "weights": ["uniform", "distance"],
+    #         "metric": ["chebyshev", "minkowski"],
+    #         "p": [1, 2, 3],
+    #     },
+    #     {
+    #         "n_neighbors": [3, 5],
+    #         "weights": ["uniform", "distance"],
+    #         "metric": ["chebyshev", "minkowski"],
+    #         "p": [1, 2],
+    #     },
+    # ),
+    # (
+    #     KNeighborsRegressor,
+    #     True,
+    #     [0, -24, -48],
+    #     {
+    #         "n_neighbors": [3, 5, 7, 9, 11, 13, 15],
+    #         "weights": ["uniform", "distance"],
+    #         "metric": ["chebyshev", "minkowski"],
+    #         "p": [1, 2, 3],
+    #     },
+    #     {
+    #         "n_neighbors": [3, 5],
+    #         "weights": ["uniform", "distance"],
+    #         "metric": ["chebyshev", "minkowski"],
+    #         "p": [1, 2],
+    #     },
+    # ),
     (
         RandomForestClassifier,
         False,
